@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoFill Friends Extension</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      width: 350px;
+      height: 500px;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      transition: background 0.3s ease;
+    }
+    h3 {
+      margin-bottom: 15px;
+      color: #2c3e50;
+      text-align: center;
+      font-size: 24px;
+      animation: fadeIn 0.5s ease-out;
+    }
+    #top-section {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: slideDown 0.5s ease-out;
+    }
+    #about-me, #donate-me, #snapchat-icon {
+      text-decoration: none;
+      color: #34495e;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 5px;
+    }
+    #about-me:hover, #donate-me:hover, #snapchat-icon:hover {
+      transform: translateY(-2px);
+      color: #2980b9;
+    }
+    #about-me img, #donate-me img, #snapchat-icon img {
+      vertical-align: middle;
+      margin-right: 5px;
+      transition: transform 0.2s ease;
+    }
+    #separator {
+      margin: 0 5px;
+      color: #34495e;
+    }
+    #searchInput {
+      padding: 8px;
+      width: calc(100% - 22px);
+      height: 25px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+      animation: fadeIn 0.5s ease-out 0.2s both;
+    }
+    #searchInput:focus {
+      outline: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    #friendsList {
+      width: 75%;
+      padding: 10px;
+      font-size: 16px;
+      margin-left: 50px;
+      background-color: white;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+      animation: fadeIn 0.5s ease-out 0.4s both;
+    }
+    #fillForm {
+      margin-top: 15px;
+      margin-left: 100px;
+      padding: 12px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      animation: fadeIn 0.5s ease-out 0.6s both;
+    }
+    #fillForm:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+    }
+    #aboutSection, #donateSection {
+      display: none;
+      margin-top: 15px;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .back-button {
+      margin-top: 10px;
+      padding: 8px 15px;
+      cursor: pointer;
+      background-color: #95a5a6;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      transition: background-color 0.3s ease;
+    }
+    .back-button:hover {
+      background-color: #7f8c8d;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+  <script src="popup.js"></script>
+</head>
+<body>
+  <!-- About Me, Donate Me, and Snapchat Icon -->
+  <div id="top-section">
+    <a id="about-me">
+      <img src="images/working.png" alt="About Me" width="16px" height="16px"> About Me
+    </a>
+    <span id="separator">|</span>
+    <a id="donate-me">
+      <img src="images/volunteer.png" alt="Donate Me" width="16px" height="16px"> Donate Me
+    </a>
+    <span id="separator">|</span>
+    <a id="snapchat-icon" href="https://www.snapchat.com/add/hett.pxtell" target="_blank"> 
+      <img src="images/snapchat.png" alt="Snapchat" width="16px" height="16px"> Snapchat
+    </a>
+  </div>
+
+  <!-- Main form section -->
+  <h3>AutoFill Friend</h3>
+  <div style="position: relative;">
+    <input type="text" id="searchInput" placeholder="Search for a friend...">
+    <img id="searchIcon" src="images/search_icon.png" alt="Search" width="16px" style="position: absolute; right: 20px; top: 14px;">
+  </div>
+  <select id="friendsList"></select>
+  <button id="fillForm">Fill Details!</button>
+
+  <!-- About Me Section -->
+  <div id="aboutSection">
+    <h4>About Me</h4>
+    <p>This extension was developed to help automatically fill Snapchat friend details into forms quickly and easily.</p>
+    <p>Features:</p>
+    <ul>
+      <li>Search and select your friends easily from the dropdown list.</li>
+      <li>Automatically fills in your Snapchat friend details in any specified form.</li>
+      <li>Convenient interface that allows you to access your friend's information quickly.</li>
+    </ul>
+    <p>Instructions:</p>
+    <ol>
+      <li>Open the webpage with the form you want to fill.</li>
+      <li>Select a friend from the dropdown list or search by name.</li>
+      <li>Click on the "Fill Details!" button to autofill the form.</li>
+    </ol>
+    <p>If you have any feedback or suggestions, feel free to reach out!</p>
+    <p>Contact: awesomehet1@gmail.com</p>
+    <p>Contact: hetworkshard@gmail.com</p>
+    <button class="back-button" id="backFromAbout">Back</button>
+  </div>
+
+  <!-- Donate Section -->
+  <div id="donateSection">
+    <h4>Support This Project</h4>
+    <p>If you find this extension useful, feel free to support it with a donation. Your contributions will help in further development and improvements.</p>
+    <img src="donate_image.png" alt="Donate" style="width: 100%; height: auto;"/>
+    <button class="back-button" id="backFromDonate">Back</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchInput = document.getElementById('searchInput');
+      const friendsList = document.getElementById('friendsList');
+      const fillButton = document.getElementById('fillForm');
+      let friendsData = [];
+
+      // Sections
+      const aboutSection = document.getElementById('aboutSection');
+      const donateSection = document.getElementById('donateSection');
+      const mainSection = document.querySelector('body > div, body > h3, body > div:nth-of-type(2), body > select, body > button'); // Main form
+
+      // Buttons
+      const aboutMeButton = document.getElementById('about-me');
+      const donateMeButton = document.getElementById('donate-me');
+      const backFromAbout = document.getElementById('backFromAbout');
+      const backFromDonate = document.getElementById('backFromDonate');
+
+      // Function to hide all main content and show specific sections
+      function showSection(sectionToShow) {
+        // Hide everything except the specific section
+        mainSection.style.display = 'none'; // Hide main section
+        aboutSection.style.display = 'none'; // Hide About Me
+        donateSection.style.display = 'none'; // Hide Donate Me
+
+        // Show the specific section
+        sectionToShow.style.display = 'block'; // Show the desired section
+        sectionToShow.style.animation = 'fadeIn 0.5s ease-out';
+      }
+
+      // Function to show the main section
+      function showMainSection() {
+        aboutSection.style.display = 'none';
+        donateSection.style.display = 'none';
+        mainSection.style.display = 'block'; // Show main section
+      }
+
+      // About Me click
+      aboutMeButton.addEventListener('click', () => {
+        showSection(aboutSection);
+      });
+
+      // Donate Me click
+      donateMeButton.addEventListener('click', () => {
+        showSection(donateSection);
+      });
+
+      // Back buttons
+      backFromAbout.addEventListener('click', showMainSection);
+      backFromDonate.addEventListener('click', showMainSection);
+
+      // Load friends data from friends.json
+      fetch(chrome.runtime.getURL('friends.json'))
+        .then((response) => response.json())
+        .then((friends) => {
+          friendsData = friends;
+          populateFriendList(friendsData);
+        })
+        .catch((error) => {
+          console.error('Error loading friends data:', error);
+        });
+
+      // Populate the friend list dropdown
+      function populateFriendList(friends) {
+        friendsList.innerHTML = ''; // Clear the dropdown
+        friends.forEach((friend) => {
+          const option = document.createElement('option');
+          option.value = friend.Username;  // Set the username as the value
+          option.textContent = friend["Display Name"];  // Set display name as text
+          friendsList.appendChild(option);
+        });
+      }
+
+      // Filter friends based on search input
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        const filteredFriends = friendsData.filter(friend =>
+          friend["Display Name"].toLowerCase().includes(query) ||
+          friend.Username.toLowerCase().includes(query)
+        );
+        populateFriendList(filteredFriends);
+      });
+
+      // Listen for the button click to autofill
+      fillButton.addEventListener('click', () => {
+        const selectedFriend = friendsList.value; // Get the selected friend's username
+        if (selectedFriend) {
+          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, { action: "fillForm", username: selectedFriend }, function (response) {
+              if (chrome.runtime.lastError) {
+                console.error(chrome.runtime.lastError.message);
+              } else {
+                console.log('Message sent to content script to fill the form.');
+              }
+            });
+          });
+        } else {
+          console.log('No friend selected');
+        }
+      });
+
+      // Add hover effect to the fill button
+      fillButton.addEventListener('mouseover', () => {
+        fillButton.style.transform = 'translateY(-2px)';
+        fillButton.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
+      });
+      fillButton.addEventListener('mouseout', () => {
+        fillButton.style.transform = 'translateY(0)';
+        fillButton.style.boxShadow = 'none';
+      });
+
+      // Log when friends data is loaded
+      console.log('Friends data loaded:', friendsData);
+
+      // Log when a friend is selected from the dropdown
+      friendsList.addEventListener('change', (event) => {
+        console.log('Selected friend:', event.target.value);
+      });
+    });
+  </script>
+</body>
+</html>
